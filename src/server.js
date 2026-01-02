@@ -71,49 +71,54 @@ app.get('/webhook', (req, res) => {
 
 // Receive Messages (POST)
 app.post('/webhook', (req, res) => {
-    const body = req.body;
+    try {
+        const body = req.body;
 
-    console.log('--- Incoming Webhook Request ---');
-    console.log('Webhook Received Body:', JSON.stringify(body, null, 2));
+        console.log('--- Incoming Webhook Request (v2) ---');
+        console.log('Raw Payload:', JSON.stringify(body, null, 2));
 
-    if (body.object) {
-        if (body.entry &&
-            body.entry[0].changes &&
-            body.entry[0].changes[0] &&
-            body.entry[0].changes[0].value.messages &&
-            body.entry[0].changes[0].value.messages[0]
-        ) {
-            const changes = body.entry[0].changes[0].value;
-            const msg = changes.messages[0];
+        if (body.object) {
+            if (body.entry &&
+                body.entry[0].changes &&
+                body.entry[0].changes[0] &&
+                body.entry[0].changes[0].value.messages &&
+                body.entry[0].changes[0].value.messages[0]
+            ) {
+                const changes = body.entry[0].changes[0].value;
+                const msg = changes.messages[0];
 
-            // Try to get sender name from contacts
-            let senderName = msg.from;
-            if (changes.contacts && changes.contacts[0] && changes.contacts[0].profile) {
-                senderName = changes.contacts[0].profile.name;
+                // Try to get sender name from contacts
+                let senderName = msg.from;
+                if (changes.contacts && changes.contacts[0] && changes.contacts[0].profile) {
+                    senderName = changes.contacts[0].profile.name;
+                }
+
+                // Store received message
+                if (msg.type === 'text') {
+                    const newMessage = {
+                        id: msg.id,
+                        from: msg.from,
+                        senderName: senderName,
+                        text: msg.text.body,
+                        timestamp: new Date(parseInt(msg.timestamp) * 1000).toISOString(),
+                        type: 'received'
+                    };
+
+                    MESSAGES.push(newMessage);
+
+                    // EMIT TO FRONTEND
+                    io.emit('new_message', newMessage);
+                    console.log('✅ RECEIVED MESSAGE:', JSON.stringify(newMessage, null, 2));
+                }
             }
-
-            // Store received message
-            if (msg.type === 'text') {
-                const newMessage = {
-                    id: msg.id,
-                    from: msg.from,
-                    senderName: senderName, // Added sender name
-                    text: msg.text.body,
-                    timestamp: new Date(parseInt(msg.timestamp) * 1000).toISOString(),
-                    type: 'received'
-                };
-
-                MESSAGES.push(newMessage);
-
-                // EMIT TO FRONTEND
-                io.emit('new_message', newMessage);
-                console.log('✅ RECEIVED MESSAGE:', JSON.stringify(newMessage, null, 2));
-            }
+            res.sendStatus(200);
+        } else {
+            console.log('❌ Webhook: Unknown Event Type or Missing Object');
+            res.sendStatus(404);
         }
-        res.sendStatus(200);
-    } else {
-        console.log('❌ Webhook: Unknown Event Type or Missing Object');
-        res.sendStatus(404);
+    } catch (error) {
+        console.error('🔥 CRITICAL WEBHOOK ERROR:', error);
+        res.sendStatus(500);
     }
 });
 

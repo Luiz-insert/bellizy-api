@@ -1,0 +1,39 @@
+{
+    "object": "whatsapp_business_account",
+    "entry": [
+        {
+            "id": "1788134922026873",
+            "changes": [
+                {
+                    "value": {
+                        "messaging_product": "whatsapp",
+                        "metadata": {
+                            "display_phone_number": "15551461812",
+                            "phone_number_id": "1009215878932557"
+                        },
+                        "contacts": [
+                            {
+                                "profile": {
+                                    "name": "Luiz Gusttavo"
+                                },
+                                "wa_id": "553199036769"
+                            }
+                        ],
+                        "messages": [
+                            {
+                                "from": "553199036769",
+                                "id": "wamid.HBgMNTUzMTk5MDM2NzY5FQIAEhggQUM1QjE1ODM0QkIwMzQzRjlCOEQyNDVBRDhDNTYxM0QA",
+                                "timestamp": "1767357911",
+                                "text": {
+                                    "body": "Oi"
+                                },
+                                "type": "text"
+                            }
+                        ]
+                    },
+                    "field": "messages"
+                }
+            ]
+        }
+    ]
+}
