@@ -1,0 +1,27 @@
+{
+    "name": "wpp-integration",
+    "version": "1.0.0",
+    "description": "WhatsApp Business API Integration Microservice",
+    "main": "src/server.js",
+    "scripts": {
+        "start": "node src/server.js",
+        "dev": "nodemon src/server.js",
+        "tunnel": "npx localtunnel --port 3001",
+        "ngrok": "npx ngrok http 3001",
+        "ngrok:custom": "npx ngrok http --domain=gradually-artistic-impala.ngrok-free.app 3001"
+    },
+    "keywords": [
+        "whatsapp",
+        "api",
+        "express"
+    ],
+    "author": "Bellizy",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^1.13.2",
+        "cors": "^2.8.5",
+        "dotenv": "^17.2.3",
+        "express": "^5.2.1",
+        "socket.io": "^4.8.3"
+    }
+}

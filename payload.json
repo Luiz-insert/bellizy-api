@@ -1,0 +1,39 @@
+{
+    "object": "whatsapp_business_account",
+    "entry": [
+        {
+            "id": "1788134922026873",
+            "changes": [
+                {
+                    "value": {
+                        "messaging_product": "whatsapp",
+                        "metadata": {
+                            "display_phone_number": "15551461812",
+                            "phone_number_id": "1009215878932557"
+                        },
+                        "contacts": [
+                            {
+                                "profile": {
+                                    "name": "Luiz Gusttavo"
+                                },
+                                "wa_id": "553199036769"
+                            }
+                        ],
+                        "messages": [
+                            {
+                                "from": "553199036769",
+                                "id": "wamid.TEST_CURL_TUNNEL",
+                                "timestamp": "1767116254",
+                                "text": {
+                                    "body": "Teste via CURL Tunnel (Luiz Gusttavo)"
+                                },
+                                "type": "text"
+                            }
+                        ]
+                    },
+                    "field": "messages"
+                }
+            ]
+        }
+    ]
+}
